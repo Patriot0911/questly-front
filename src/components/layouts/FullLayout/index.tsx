@@ -8,7 +8,7 @@ const FullLayout = ({ children, }: PropsWithChildren) => {
                 <Header />
             </div>
             {/* затичка через жопу */}
-            <div className='bg-[#5602F0] h-[calc(100vh-65px)]'>
+            <div className='bg-[#5602F0] h-full'>
                 {children}
             </div>
         </div>

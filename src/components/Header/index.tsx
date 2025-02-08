@@ -2,6 +2,7 @@
 
 import { useIsAuthorized } from "@/hooks/redux";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect } from "react";
 import LoginDialog from "../LoginDialog";
 import ProfileButton from "../ProfileButton";
@@ -24,7 +25,7 @@ const Header = () => {
     return (
         <header className="bg-[#2B1555] w-full">
             <div className="flex items-center justify-between h-16 p-4 gap-4">
-                <div className="flex items-center justify-center gap-2">
+                <Link href="/home" className="flex items-center justify-center gap-2">
                     <Image
                         src="/vercel.svg"
                         alt="Vercel logomark"
@@ -33,7 +34,7 @@ const Header = () => {
                         priority
                     />
                     <p className="text-white">QuestLy</p>
-                </div>
+                </Link>
                 {isAuthorized ? (
                     <ProfileButton />
                 ) : (                    

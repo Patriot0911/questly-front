@@ -19,8 +19,8 @@ const ProfileButton = () => {
             <DropdownMenuContent align="end" className="w-32">
                 <DropdownMenuItem asChild>
                     <Link href="/profile">
-                    <User size={16} />
-                    <span>My Profile</span>
+                        <User size={16} />
+                        <span>My Profile</span>
                     </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>

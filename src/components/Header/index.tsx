@@ -1,10 +1,14 @@
 'use client';
 
+import { useIsAuthorized } from "@/hooks/redux";
 import Image from "next/image";
-import LoginDialog from "../login-dialog";
 import { useEffect } from "react";
+import LoginDialog from "../LoginDialog";
+import ProfileButton from "../ProfileButton";
 
-const Sidebar = () => {
+const Header = () => {
+    const isAuthorized = useIsAuthorized();
+    
     useEffect(
         () => {
             const cb = async () => {
@@ -12,13 +16,13 @@ const Sidebar = () => {
                     credentials: 'include',
                 });
                 const data = await res.json();
-                console.log({data});
+                console.log({ data });
             };
             cb();
         }, []
     );
     return (
-        <aside className="bg-[#2B1555] h-full">
+        <header className="bg-[#2B1555] w-full">
             <div className="flex items-center justify-between h-16 p-4 gap-4">
                 <div className="flex items-center justify-center gap-2">
                     <Image
@@ -30,10 +34,14 @@ const Sidebar = () => {
                     />
                     <p className="text-white">QuestLy</p>
                 </div>
-                <LoginDialog />
+                {isAuthorized ? (
+                    <ProfileButton />
+                ) : (                    
+                    <LoginDialog />
+                )}
             </div>
-        </aside>
+        </header>
     );
 };
 
-export default Sidebar;
+export default Header;

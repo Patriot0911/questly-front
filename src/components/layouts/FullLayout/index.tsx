@@ -1,13 +1,14 @@
-import Sidebar from '@/components/sidebar';
+import Header from '@/components/Header';
 import { PropsWithChildren, } from 'react';
 
 const FullLayout = ({ children, }: PropsWithChildren) => {
     return (
-        <div className='grid grid-cols-6 h-screen'>
-            <div className='col-span-1 border-r'>
-                <Sidebar />
+        <div className='w-screen'>
+            <div className='border-b'>
+                <Header />
             </div>
-            <div className='col-span-5 bg-[#5602F0]'>
+            {/* затичка через жопу */}
+            <div className='bg-[#5602F0] h-[calc(100vh-65px)]'>
                 {children}
             </div>
         </div>

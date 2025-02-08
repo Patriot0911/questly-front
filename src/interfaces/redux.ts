@@ -1,6 +1,7 @@
 export interface IAuthState {
     isAuthenticated: boolean;
     userName?: string;
+    avatarUrl?: string;
     accessToken?: string;
     refreshToken?: string;
 };

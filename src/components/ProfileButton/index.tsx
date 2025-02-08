@@ -7,7 +7,7 @@ import Link from "next/link";
 const ProfileButton = () => {
     const { userName, avatarUrl } = useUserInfo();
     return (
-        <DropdownMenu>
+        <DropdownMenu modal={false}>
             <DropdownMenuTrigger className="flex items-center space-x-4 focus:outline-none">
                 <Avatar>
                     <AvatarImage src={avatarUrl} alt={userName} />

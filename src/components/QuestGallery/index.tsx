@@ -37,7 +37,7 @@ const QuestGallery = () => {
     }, [page]);
 
     return (
-        <div className="flex flex-col min-h-screen space-y-4">
+        <div className="flex flex-col h-full space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 flex-wrap gap-6">
                 {quests.map((quest) => (
                     <QuestDialog key={quest.id} quest={quest} />

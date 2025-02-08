@@ -20,33 +20,29 @@ const Header = () => {
                 const { name, accessToken, refreshToken, state, } = await res.json();
                 if(!state)
                     return;
-                dispatch(logIn({
-                    userName: name,
-                    accessToken,
-                    refreshToken,
-                }))
+                dispatch(logIn({ userName: name, accessToken, refreshToken, }))
             })();
         }, []
     );
     return (
-        <header className="bg-[#2B1555] w-full">
-            <div className="flex items-center justify-between h-16 p-4 gap-4">
-                <Link href="/home" className="flex items-center justify-center gap-2">
-                    <Image
-                        src="/vercel.svg"
-                        alt="Vercel logomark"
-                        width={32}
-                        height={32}
-                        priority
-                    />
-                    <p className="text-white">QuestLy</p>
-                </Link>
-                {isAuthorized ? (
-                    <ProfileButton />
-                ) : (
-                    <LoginDialog />
-                )}
-            </div>
+        <header
+            className={`bg-[#4d4f50] w-full flex items-center justify-between h-16 p-4 gap-4 sticky top-0 z-30`}
+            style={{ boxShadow: '0px 0px 5px 2px #383838'}}
+        >
+            <Link href="/home" className="flex items-center justify-center gap-2 opacity-80 hover:opacity-100 transition-opacity">
+                <Image
+                    src="/assets/images/logo.png"
+                    alt="Vercel logomark"
+                    width={52}
+                    height={52}
+                    priority
+                />
+            </Link>
+            {isAuthorized ? (
+                <ProfileButton />
+            ) : (
+                <LoginDialog />
+            )}
         </header>
     );
 };

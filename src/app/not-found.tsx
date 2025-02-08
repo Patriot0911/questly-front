@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 
-const RootPage = () => {
+const NotFoundPage = () => {
     redirect("/home");
 };
 
-export default RootPage;
+export default NotFoundPage;

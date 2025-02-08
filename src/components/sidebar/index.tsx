@@ -1,7 +1,22 @@
+'use client';
+
 import Image from "next/image";
 import LoginDialog from "../login-dialog";
+import { useEffect } from "react";
 
 const Sidebar = () => {
+    useEffect(
+        () => {
+            const cb = async () => {
+                const res = await fetch('/api/auth/me', {
+                    credentials: 'include',
+                });
+                const data = await res.json();
+                console.log({data});
+            };
+            cb();
+        }, []
+    );
     return (
         <aside className="bg-[#2B1555] h-full">
             <div className="flex items-center justify-between h-16 p-4 gap-4">

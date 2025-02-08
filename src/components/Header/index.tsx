@@ -1,25 +1,31 @@
 'use client';
 
-import { useIsAuthorized } from "@/hooks/redux";
+import { useAppDispatch, useIsAuthorized } from "@/hooks/redux";
+import ProfileButton from "../ProfileButton";
+import LoginDialog from "../LoginDialog";
+import { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect } from "react";
-import LoginDialog from "../LoginDialog";
-import ProfileButton from "../ProfileButton";
+import { logIn } from "@/lib/redux/slices/auth";
 
 const Header = () => {
+    const dispatch = useAppDispatch();
     const isAuthorized = useIsAuthorized();
-    
     useEffect(
         () => {
-            const cb = async () => {
+            (async () => {
                 const res = await fetch('/api/auth/me', {
                     credentials: 'include',
                 });
-                const data = await res.json();
-                console.log({ data });
-            };
-            cb();
+                const { name, accessToken, refreshToken, state, } = await res.json();
+                if(!state)
+                    return;
+                dispatch(logIn({
+                    userName: name,
+                    accessToken,
+                    refreshToken,
+                }))
+            })();
         }, []
     );
     return (
@@ -37,7 +43,7 @@ const Header = () => {
                 </Link>
                 {isAuthorized ? (
                     <ProfileButton />
-                ) : (                    
+                ) : (
                     <LoginDialog />
                 )}
             </div>

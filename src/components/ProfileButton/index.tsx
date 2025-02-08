@@ -6,7 +6,6 @@ import Link from "next/link";
 
 const ProfileButton = () => {
     const { userName, avatarUrl } = useUserInfo();
-
     return (
         <DropdownMenu>
             <DropdownMenuTrigger className="flex items-center space-x-4 focus:outline-none">

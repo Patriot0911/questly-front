@@ -12,7 +12,7 @@ const RatingDisplay = ({ value, Icon, color }: RatingDisplayProps) => (
         <span className="mb-1">{Icon === Star ? "Rating" : "Complexity"}</span>
         <div className="flex items-center gap-1">
             {[...Array(5)].map((_, i) => (
-                <div key={i} className="relative w-5 h-5">
+                <div key={i} className="relative w-4 h-4">
                     <Icon className="absolute w-full h-full" fill="#111" />
                     <div
                         className="absolute w-full h-full overflow-hidden"

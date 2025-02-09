@@ -1,7 +1,7 @@
 'use client';
 
 import { Pagination, PaginationContent, PaginationItem, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
-import { Difficulty, IQuestPreview, Status } from "@/interfaces/quest";
+import {IQuestPreview, } from "@/interfaces/quest";
 import { ChevronDown, ChevronUp, Search } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -9,53 +9,41 @@ import { Button } from "../../ui/button";
 import { Input } from "../../ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../ui/select";
 import QuestPreview from "../QuestPreview";
+import { useAppSelector, } from "@/hooks/redux";
+import { useUserSelector } from "@/hooks/redux/auth";
 
-const mockQuests: IQuestPreview[] = Array.from({ length: 20 }, (_, index) => ({
-    id: (index + 1).toString(),
-    authorId: (index + 1).toString(),
-    status: Status.PUBLISHED,
-    timeLimit: Math.floor(Math.random() * 40) + 20,
-    totalTasks: Math.floor(Math.random() * 10) + 5,
-    totalAttempts: Math.floor(Math.random() * 100) + 50,
-    totalSolved: Math.floor(Math.random() * 40) + 10,
-    avgSolvedTime: Math.floor(Math.random() * 30) + 15,
-    title: `Quest ${index + 1}`,
-    description: `Description for Quest ${index + 1}`,
-    avgRating: Math.random() * 4 + 1,
-    difficulty: Difficulty.EASY,
-    updatedAt: new Date().toISOString(),
-    createdAt: new Date().toISOString(),
-    author: {
-        id: (index + 1).toString(),
-        fullName: `Author ${index + 1}`,
-        createdAt: new Date().toISOString(),
-    },
-    previewImageUrl: `https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1081590/header.jpg?t=1627988160`,
-}));
-
-const fetchQuests = async (page: number, pageSize: number): Promise<{ quests: IQuestPreview[], totalPages: number }> => {
-    const start = (page - 1) * pageSize;
-    const end = start + pageSize;
-    const quests = mockQuests.slice(start, end);
-    return { quests, totalPages: Math.ceil(mockQuests.length / pageSize) };
-};
-
-const QuestGallery = () => {
+const QuestGallery = ({ baseUrl, isAuth, }: { baseUrl: string; isAuth?: boolean; }) => {
     const [quests, setQuests] = useState<IQuestPreview[]>([]);
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [order, setOrder] = useState("asc");
     const toggleOrder = () => setOrder(order === "asc" ? "desc" : "asc");
-    const pageSize = 8;
+    const [pageSize] = useState(8);
+
+    const { isAuthenticated, accessToken, } = useAppSelector(useUserSelector);
 
     useEffect(() => {
         const loadQuests = async () => {
-            const data = await fetchQuests(page, pageSize);
-            setQuests(data.quests);
-            setTotalPages(data.totalPages);
+            const url = new URL(baseUrl);
+            url.searchParams.append('pageSize', `${pageSize}`)
+            url.searchParams.append('page', `${page}`);
+            url.searchParams.append('sortOrder', 'asc');
+            url.searchParams.append('status', 'UNPUBLISHED');
+            if(isAuth && !isAuthenticated)
+                return;
+            const res = await fetch(url, {
+                headers: {
+                    'authorization': `Bearer ${accessToken}`,
+                },
+            });
+            const data = await res.json();
+            if(!data || !data.data)
+                return;
+            setQuests(data.data);
+            setTotalPages(data.total);
         };
         loadQuests();
-    }, [page]);
+    }, [page, isAuth, baseUrl, isAuthenticated,]);
 
     return (
         <div className="flex flex-col h-full space-y-4">

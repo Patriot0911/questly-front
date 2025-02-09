@@ -91,11 +91,11 @@ body {
     }
     /* Track */
     &::-webkit-scrollbar-track {
-      background: rgba(0, 0, 0, 0.336);
+      background: #55555557;
     }
     /* Handle */
     &::-webkit-scrollbar-thumb {
-      background: #55555557;
+      background: rgba(0, 0, 0, 0.336);
     }
     /* Handle on hover */
     &::-webkit-scrollbar-thumb:hover {

@@ -1,0 +1,35 @@
+.navbar {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    .list {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.5;
+        .item {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            background-color: transparent;
+            padding: 4px 12px;
+            user-select: none;
+            -webkit-user-select: none;
+            color: #fff;
+            cursor: pointer;
+            transition:
+                ease-in-out background-color 0.2s;
+            span {
+                transition:
+                    ease-in-out transform 0.3s;
+            }
+            &:hover {
+                background-color: #32313396;
+                span {
+                    transform: translateY(1px);
+                }
+            }
+        }
+    }
+}

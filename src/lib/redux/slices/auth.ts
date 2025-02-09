@@ -2,6 +2,7 @@ import { IAuthLoginPayload, IAuthState } from '@/interfaces/redux';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState: IAuthState = {
+    isLoading: false,
     isAuthenticated: false,
 };
 

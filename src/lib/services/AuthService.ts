@@ -10,7 +10,7 @@ class AuthService {
     ) {
         const response = NextResponse.redirect(redirectUrl);
         if(accessToken && refreshToken) {
-            this.addTokenCookies(
+            AuthService.addTokenCookies(
                 response,
                 accessToken,
                 refreshToken
@@ -23,7 +23,7 @@ class AuthService {
         accessToken: string,
     ) {
         return fetch(
-            `${this.baseUrl}/logout`,
+            `${AuthService.baseUrl}/logout`,
             {
                 headers: {
                     'authorization': `Bearer ${accessToken}`,
@@ -42,9 +42,10 @@ class AuthService {
             refreshToken,
         };
         response.cookies.set('authState', JSON.stringify(auth));
+        return response;
     };
 
-    static async refreshTokens(refreshToken: string) {
+    static async refreshTokens(refreshToken: string): Promise<any> {
         const res = await fetch(
             `${process.env.NEXT_PUBLIC_API_URL}/auth/refresh`,
             {
@@ -52,9 +53,6 @@ class AuthService {
                 headers: {
                     'authorization': `Bearer ${refreshToken}`,
                 },
-                body: JSON.stringify({
-                    refreshToken: refreshToken,
-                })
             }
         );
         const data = await res.json();
@@ -62,15 +60,16 @@ class AuthService {
     };
 
     static async refreshWare(refreshToken: string, fn: (accessToken: string, refreshToken: string) => Promise<NextResponse<any>>) {
-        console.log('refreshed');
-        const refreshData = await this.refreshTokens(refreshToken);
-        if(!refreshData)
-            return NextResponse.json({
+        const refreshData = await AuthService.refreshTokens(refreshToken);
+        if(!refreshData || refreshData.statusCode == 401) {
+            const response = NextResponse.json({
                 state: false,
             });
+            response.cookies.delete('authState');
+            return response;
+        };
         const response: NextResponse<any> = await fn(refreshData.accessToken, refreshData.refreshToken);
-        this.addTokenCookies(response, refreshData.accessToken, refreshData.refreshToken);
-        return response;
+        return AuthService.addTokenCookies(response, refreshData.accessToken, refreshData.refreshToken);
     };
 
     static async getMe(
@@ -85,11 +84,10 @@ class AuthService {
                 }
             }
         );
-        const data = await res.json();
-
-        if(data.statusCode == 401) {
-            return this.refreshWare(refreshToken, this.getMe);
+        if(res.status == 401) {
+            return AuthService.refreshWare(refreshToken, AuthService.getMe);
         };
+        const data = await res.json();
         return NextResponse.json({
             state: true,
             accessToken,

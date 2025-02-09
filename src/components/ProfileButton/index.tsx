@@ -1,21 +1,43 @@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { useAppDispatch, useAppSelector, useUserSelector } from "@/hooks/redux";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage, } from "@/components/ui/avatar";
+import { useAppDispatch, useAppSelector, } from "@/hooks/redux";
+import { useUserSelector } from "@/hooks/redux/auth";
 import { authLogOut, } from '@/lib/redux/slices/auth';
 import { LogOut, User } from "lucide-react";
 import Link from "next/link";
 
 const ProfileButton = () => {
     const disaptch = useAppDispatch();
-    const { avatarUrl, userName, } = useAppSelector(useUserSelector);
-    const logOut = async() => {
+    // const avatarUrl = '';
+    // const userName = '';
+    const { avatarUrl, userName, accessToken, } = useAppSelector(useUserSelector);
+    const logOut = async () => {
         const res = await fetch('/api/auth/logout');
         const data = await res.json();
-        console.log({data});
         if(data.state) {
-            console.log('tested')
             disaptch(authLogOut());
         };
+    };
+    const createNewQuest = async () => {
+        // if(!accessToken)
+        //     return;
+        // try {
+        //     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/quests`, {
+        //         method: 'POST',
+        //         headers: {
+        //             'authorization': `Bearer ${accessToken}`,
+        //             'Content-Type': 'application/json'
+        //         },
+        //         body: JSON.stringify({
+        //             "title": "2qwe",
+        //             "description": "string",
+        //             "difficulty": "MEDIUM"
+        //         })
+        //     })
+        //     const data = await res.json();
+        // } catch(e) {
+        //     console.log({e});
+        // }
     };
     return (
         <DropdownMenu modal={false}>
@@ -38,6 +60,9 @@ const ProfileButton = () => {
                         <LogOut size={16} />
                         <span>Log Out</span>
                     </div>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild onClick={createNewQuest}>
+                    <span>Create Quest</span>
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>

@@ -1,21 +1,36 @@
 'use client';
 
 import { Pagination, PaginationContent, PaginationItem, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
-import { IQuestPreview } from "@/interfaces/quest";
+import { Difficulty, IQuestPreview, Status } from "@/interfaces/quest";
 import { ChevronDown, ChevronUp, Search } from "lucide-react";
+import Link from "next/link";
 import { useEffect, useState } from "react";
-import QuestDialog from "../QuestDialog";
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import { Button } from "../../ui/button";
+import { Input } from "../../ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../ui/select";
+import QuestPreview from "../QuestPreview";
 
 const mockQuests: IQuestPreview[] = Array.from({ length: 20 }, (_, index) => ({
-    id: index + 1,
+    id: (index + 1).toString(),
+    authorId: (index + 1).toString(),
+    status: Status.PUBLISHED,
+    timeLimit: Math.floor(Math.random() * 40) + 20,
+    totalTasks: Math.floor(Math.random() * 10) + 5,
+    totalAttempts: Math.floor(Math.random() * 100) + 50,
+    totalSolved: Math.floor(Math.random() * 40) + 10,
+    avgSolvedTime: Math.floor(Math.random() * 30) + 15,
     title: `Quest ${index + 1}`,
     description: `Description for Quest ${index + 1}`,
-    rating: Math.random() * 4 + 1,
-    complexity: Math.floor(Math.random() * 4) + 1,
-    previewImageUrl: `https://media.discordapp.net/attachments/1020762140837163090/1337739555947937802/doc_2025-01-07_20-18-46.gif?ex=67a88a8c&is=67a7390c&hm=ed0379b4014356047b7dff5769a90145df0c1856ff25a6e8d38c28a3dd522259&=`,
+    avgRating: Math.random() * 4 + 1,
+    difficulty: Difficulty.EASY,
+    updatedAt: new Date().toISOString(),
+    createdAt: new Date().toISOString(),
+    author: {
+        id: (index + 1).toString(),
+        fullName: `Author ${index + 1}`,
+        createdAt: new Date().toISOString(),
+    },
+    previewImageUrl: `https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1081590/header.jpg?t=1627988160`,
 }));
 
 const fetchQuests = async (page: number, pageSize: number): Promise<{ quests: IQuestPreview[], totalPages: number }> => {
@@ -105,7 +120,10 @@ const QuestGallery = () => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 flex-wrap gap-6">
                 {quests.map((quest) => (
-                    <QuestDialog key={quest.id} quest={quest} />
+                    //<QuestDialog key={quest.id} quest={quest} />
+                    <Link key={quest.id} href={`/quests/${quest.id}`}>
+                        <QuestPreview quest={quest} />
+                    </Link>
                 ))}
             </div>
         </div>

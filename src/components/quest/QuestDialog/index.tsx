@@ -1,6 +1,6 @@
 import { IQuestPreview } from "@/interfaces/quest";
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "../../ui/dialog";
 import QuestPreview from "../QuestPreview";
-import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "../ui/dialog";
 
 interface QuestDialogProps {
     quest: IQuestPreview;

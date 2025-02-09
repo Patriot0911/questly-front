@@ -1,5 +1,5 @@
 import { IQuestPreview } from "@/interfaces/quest";
-import { Card, CardContent } from "../ui/card";
+import { Card, CardContent } from "../../ui/card";
 import QuestMetrics from "./QuestMetrics";
 
 interface QuestPreviewProps {
@@ -22,8 +22,7 @@ const QuestPreview = ({ quest }: QuestPreviewProps) => {
                 <h3 className="text-lg font-bold">{quest.title}</h3>
                 {quest.description && <p className="text-sm text-gray-600">{quest.description}</p>}
                 <QuestMetrics
-                    rating={quest?.rating ?? 1}
-                    complexity={quest.complexity}
+                    rating={quest.avgRating}
                 />
             </CardContent>
         </Card>

@@ -1,4 +1,4 @@
-import QuestGallery from "@/components/QuestGallery";
+import QuestGallery from "@/components/quest/QuestGallery";
 
 const HomePage = () => {
     return (

@@ -1,4 +1,5 @@
 import type { AppDispatch, AppStore, RootState } from '@/lib/redux/store';
+import { createSelector } from '@reduxjs/toolkit';
 import { useDispatch, useSelector, useStore } from 'react-redux';
 
 export const useAppDispatch = useDispatch.withTypes<AppDispatch>();
@@ -17,3 +18,8 @@ export const useUserInfo = () => {
         refreshToken: state.auth.refreshToken,
     }));
 };
+
+export const useUserSelector = createSelector(
+    (state: RootState) => state,
+    (state) => state.auth
+);

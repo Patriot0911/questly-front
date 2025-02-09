@@ -17,10 +17,13 @@ const Header = () => {
                 const res = await fetch('/api/auth/me', {
                     credentials: 'include',
                 });
-                const { name, accessToken, refreshToken, state, } = await res.json();
+                const { state, ...data } = await res.json();
                 if(!state)
                     return;
-                dispatch(logIn({ userName: name, accessToken, refreshToken, }))
+                const { name: userName, accessToken, refreshToken, } = data;
+                if(!state)
+                    return
+                dispatch(logIn({ userName, accessToken, refreshToken, }))
             })();
         }, []
     );

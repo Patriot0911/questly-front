@@ -16,11 +16,11 @@ export const authSlice = createSlice({
             accessToken: action.payload.accessToken,
             refreshToken: action.payload.refreshToken,
         }),
-        logOut: () => ({
+        authLogOut: () => ({
             ...initialState,
         }),
     },
 });
 
-export const { logIn, logOut } = authSlice.actions;
+export const { logIn, authLogOut } = authSlice.actions;
 export default authSlice.reducer;

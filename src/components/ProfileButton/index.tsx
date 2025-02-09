@@ -1,11 +1,22 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { useUserInfo } from "@/hooks/redux";
+import { useAppDispatch, useAppSelector, useUserSelector } from "@/hooks/redux";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { authLogOut, } from '@/lib/redux/slices/auth';
 import { LogOut, User } from "lucide-react";
 import Link from "next/link";
 
 const ProfileButton = () => {
-    const { userName, avatarUrl } = useUserInfo();
+    const disaptch = useAppDispatch();
+    const { avatarUrl, userName, } = useAppSelector(useUserSelector);
+    const logOut = async() => {
+        const res = await fetch('/api/auth/logout');
+        const data = await res.json();
+        console.log({data});
+        if(data.state) {
+            console.log('tested')
+            disaptch(authLogOut());
+        };
+    };
     return (
         <DropdownMenu modal={false}>
             <DropdownMenuTrigger className="flex items-center space-x-4 focus:outline-none">
@@ -22,11 +33,11 @@ const ProfileButton = () => {
                         <span>My Profile</span>
                     </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                    <Link href="/logout">
+                <DropdownMenuItem asChild onClick={logOut}>
+                    <div>
                         <LogOut size={16} />
                         <span>Log Out</span>
-                    </Link>
+                    </div>
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>

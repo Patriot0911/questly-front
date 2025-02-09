@@ -83,4 +83,23 @@ body {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+  .simple-scrollbar {
+    &::-webkit-scrollbar {
+      width: 10px;
+      border-top: 1px solid black;
+      position: absolute;
+    }
+    /* Track */
+    &::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.336);
+    }
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+      background: #55555557;
+    }
+    /* Handle on hover */
+    &::-webkit-scrollbar-thumb:hover {
+      background: #888;
+    }
+  }
 }

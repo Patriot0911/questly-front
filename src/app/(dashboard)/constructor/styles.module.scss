@@ -132,15 +132,14 @@ $--bg-dark-clr: #3b3c3d;
                 border-radius: 5px;
             }
         }
-        .scroll {
-            height: 10rem;
-        }
         .scene-list {
             width: 100%;
-            height: 100%;
+            height: 10rem;
+            overflow-x: auto;
             display: flex;
             flex-direction: row;
             gap: 1rem;
+            padding-bottom: 3px !important;
             .item {
                 cursor: pointer;
                 display: flex;
@@ -162,7 +161,7 @@ $--bg-dark-clr: #3b3c3d;
                 cursor: pointer;
                 justify-content: center !important;
                 align-items: center !important;
-                background-color: #1a19199d;
+                background-color: #1a19193f;
                 border: none;
                 border-radius: 5px;
                 width: 8rem;

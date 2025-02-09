@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import AuthService from '@/lib/services/AuthService';
 
 export async function GET(request: NextRequest) {
     const authRaw = request.cookies.get('authState');
@@ -8,19 +9,5 @@ export async function GET(request: NextRequest) {
         });
     const authState = JSON.parse(authRaw.value);
     const { accessToken, refreshToken, } = authState;
-    const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/auth/me`,
-        {
-            headers: {
-                'authorization': `Bearer ${accessToken}`,
-            }
-        }
-    );
-    const { fullName, } = await res.json();
-    return NextResponse.json({
-        state: true,
-        accessToken,
-        refreshToken,
-        name: fullName,
-    });
+    return AuthService.getMe(accessToken, refreshToken);
 };

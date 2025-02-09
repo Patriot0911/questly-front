@@ -8,13 +8,13 @@ interface QuestPreviewProps {
 
 const QuestPreview = ({ quest }: QuestPreviewProps) => {
     return (
-        <Card key={quest.id} className="w-full p-2">
+        <Card key={quest.id} className="w-full p-2 border border-black">
             {quest.previewImageUrl && (
                 <div className="flex justify-center p-2">
                     <img
                         src={quest.previewImageUrl}
                         alt={quest.title}
-                        className="object-cover w-full h-full"
+                        className="object-cover w-full h-[200px]"
                     />
                 </div>
             )}

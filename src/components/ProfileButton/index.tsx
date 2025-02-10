@@ -1,5 +1,5 @@
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage, } from "@/components/ui/avatar";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useAppDispatch, useAppSelector, } from "@/hooks/redux";
 import { useUserSelector } from "@/hooks/redux/auth";
 import { authLogOut, } from '@/lib/redux/slices/auth';
@@ -7,15 +7,15 @@ import { LogOut, User } from "lucide-react";
 import Link from "next/link";
 
 const ProfileButton = () => {
-    const disaptch = useAppDispatch();
+    const dispatch = useAppDispatch();
     // const avatarUrl = '';
     // const userName = '';
-    const { avatarUrl, userName, accessToken, } = useAppSelector(useUserSelector);
+    const { avatarUrl, userName, accessToken,  } = useAppSelector(useUserSelector);
     const logOut = async () => {
         const res = await fetch('/api/auth/logout');
         const data = await res.json();
         if(data.state) {
-            disaptch(authLogOut());
+            dispatch(authLogOut());
         };
     };
     const createNewQuest = async () => {
@@ -50,7 +50,7 @@ const ProfileButton = () => {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-32">
                 <DropdownMenuItem asChild>
-                    <Link href="/profile">
+                    <Link href="/profile/1"> {/* change to current user id later */}
                         <User size={16} />
                         <span>My Profile</span>
                     </Link>

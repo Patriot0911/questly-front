@@ -3,9 +3,9 @@
 import { useAppDispatch, useAppSelector, } from "@/hooks/redux";
 import { useIsAuthorizedSelector } from "@/hooks/redux/auth";
 import { logIn } from "@/lib/redux/slices/auth";
-import ProfileButton from "../ProfileButton";
-import LoginDialog from "../LoginDialog";
 import { useEffect } from "react";
+import LoginDialog from "../LoginDialog";
+import ProfileButton from "../ProfileButton";
 
 import NavBar from "./NavBar";
 
@@ -24,7 +24,7 @@ const Header = () => {
                 const { name: userName, accessToken, refreshToken, } = data;
                 if(!state)
                     return
-                dispatch(logIn({ userName, accessToken, refreshToken, }))
+                dispatch(logIn({ userName, accessToken, refreshToken }));
             })();
         }, []
     );

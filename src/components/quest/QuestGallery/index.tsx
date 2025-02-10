@@ -1,7 +1,9 @@
 'use client';
 
 import { Pagination, PaginationContent, PaginationItem, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
-import {IQuestPreview, } from "@/interfaces/quest";
+import { useAppSelector, } from "@/hooks/redux";
+import { useUserSelector } from "@/hooks/redux/auth";
+import { IQuestPreview, } from "@/interfaces/quest";
 import { ChevronDown, ChevronUp, Search } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -9,8 +11,6 @@ import { Button } from "../../ui/button";
 import { Input } from "../../ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../ui/select";
 import QuestPreview from "../QuestPreview";
-import { useAppSelector, } from "@/hooks/redux";
-import { useUserSelector } from "@/hooks/redux/auth";
 
 const QuestGallery = ({ baseUrl, isAuth, }: { baseUrl: string; isAuth?: boolean; }) => {
     const [quests, setQuests] = useState<IQuestPreview[]>([]);
@@ -94,7 +94,7 @@ const QuestGallery = ({ baseUrl, isAuth, }: { baseUrl: string; isAuth?: boolean;
                                 />
                             </PaginationItem>
                             <PaginationItem>
-                                <span className="px-4 text-nowrap">Page {page} of {totalPages}</span>
+                                <span className="px-4 text-nowrap">Page {page} of {totalPages ?? 1}</span>
                             </PaginationItem>
                             <PaginationItem>
                                 <PaginationNext

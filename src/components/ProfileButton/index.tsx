@@ -1,10 +1,11 @@
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage, } from "@/components/ui/avatar";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useAppDispatch, useAppSelector, } from "@/hooks/redux";
 import { useUserSelector } from "@/hooks/redux/auth";
 import { authLogOut, } from '@/lib/redux/slices/auth';
 import { LogOut, User } from "lucide-react";
 import Link from "next/link";
+import NewQuestDialog from "../NewQuestDialog";
 
 const ProfileButton = () => {
     const disaptch = useAppDispatch();
@@ -12,8 +13,9 @@ const ProfileButton = () => {
     const logOut = async () => {
         const res = await fetch('/api/auth/logout');
         const data = await res.json();
-        if(data.state)
-            return disaptch(authLogOut());
+        if(data.state) {
+            disaptch(authLogOut());
+        };
     };
     const createNewQuest = async () => {
         if(!accessToken)
@@ -45,21 +47,21 @@ const ProfileButton = () => {
                 </Avatar>
                 <span className="text-white">{userName}</span>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-32">
+            <DropdownMenuContent align="end" className="w-36">
                 <DropdownMenuItem asChild>
-                    <Link href="/profile">
+                    <Link href="/profile/1"> {/* change to current user id later */}
                         <User size={16} />
                         <span>My Profile</span>
                     </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild onClick={createNewQuest}>
+                    <NewQuestDialog />
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild onClick={logOut}>
                     <div>
                         <LogOut size={16} />
                         <span>Log Out</span>
                     </div>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild onClick={createNewQuest}>
-                    <span>Create Quest</span>
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>

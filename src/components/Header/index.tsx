@@ -1,8 +1,8 @@
 'use client';
 
 import { useAppDispatch, useAppSelector, } from "@/hooks/redux";
+import { logIn, notLogged, } from "@/lib/redux/slices/auth";
 import { useUserSelector } from "@/hooks/redux/auth";
-import { logIn, notLogged, startLogging } from "@/lib/redux/slices/auth";
 import ProfileButton from "../ProfileButton";
 import LoginDialog from "../LoginDialog";
 import { useEffect } from "react";

@@ -8,5 +8,8 @@ export const useIsAuthorizedSelector = createSelector(
 
 export const useUserSelector = createSelector(
     (state: RootState) => state,
-    (state) => state.auth,
+    (state) => ({
+        ...state.auth,
+        tokenExpires: state.auth.tokenExpires && new Date(state.auth.tokenExpires),
+    }),
 );

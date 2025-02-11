@@ -1,0 +1,14 @@
+$--bg-light-clr: #ffffff;
+$--bg-dark-clr: #3b3c3d;
+
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 200px;
+    height: 820px;
+    @media (max-width: 1900px) {
+        height: 700px;
+    }
+}

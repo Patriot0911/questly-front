@@ -1,0 +1,81 @@
+$--bg-light-clr: #ffffff;
+$--bg-dark-clr: #3b3c3d;
+
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    margin: 20px;
+    .scene-section {
+        flex-grow: 1;
+        width: 0;
+        max-width: 1600px;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        gap: 1.5rem;
+        .container {
+            box-shadow: -1px 1px 4px 3px rgba(0, 0, 0, 0.384);
+            border: 1px solid #415bcf;
+            padding: 1rem;
+            color: #ffffff;
+            background-color: $--bg-dark-clr;
+        }
+        .scene {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            &__empty {
+                background:
+                    linear-gradient(
+                        to left bottom,
+                        #2222249f,
+                        #1c1c248a
+                    );
+                flex-grow: 1;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                border-radius: 5px;
+                gap: 1rem;
+                border: 1px solid rgba(148, 146, 146, 0.349);
+                &:hover {
+                    cursor: pointer;
+                    background:
+                        linear-gradient(
+                            to left bottom,
+                            #2828299f,
+                            #1010149f
+                        );
+                    .empty-scene-icon {
+                        transform: rotateZ(5deg) scale(1.1);
+                    }
+                }
+                span {
+                    user-select: none;
+                    -webkit-user-select: none;
+                    font-size: 1.5rem;
+                }
+                .empty-scene-icon {
+                    font-size: 5rem;
+                    transition: transform ease-in-out 0.3s;
+                }
+            }
+            &__side {
+                width: 250px;
+                height: 100%;
+                background-color: #2828299f;
+                border: 1px solid rgba(148, 146, 146, 0.349);
+                border-radius: 5px;
+            }
+        }
+    }
+}

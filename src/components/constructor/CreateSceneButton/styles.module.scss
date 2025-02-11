@@ -22,8 +22,15 @@
         cursor: pointer;
         position: absolute;
     }
-    svg {
-        font-size: 2.5rem;
+    .svg-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 8rem;
+        height: 100%;
+        svg {
+            font-size: 4rem;
+        }
     }
     &:hover {
         background-color: #1a19199d;

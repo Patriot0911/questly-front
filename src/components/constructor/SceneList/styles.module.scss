@@ -3,7 +3,7 @@ $--bg-dark-clr: #3b3c3d;
 
 .scene-list {
     width: 100%;
-    height: 10rem;
+    height: 160px !important;
     overflow-x: scroll;
     display: flex;
     flex-direction: row;
@@ -15,6 +15,7 @@ $--bg-dark-clr: #3b3c3d;
         flex-direction: column;
         justify-content: space-between;
         text-align: center;
+        align-items: center;
         border-radius: 7px;
         height: 100%;
         width: 10rem;
@@ -27,21 +28,14 @@ $--bg-dark-clr: #3b3c3d;
         }
         img {
             width: 100%;
-            height: 100%;
+            height: 5rem;
             object-fit: cover;
         }
-    }
-    .new-item {
-        cursor: pointer;
-        justify-content: center !important;
-        align-items: center !important;
-        background-color: #1a19193f;
-        border: none;
-        border-radius: 5px;
-        width: 8rem;
-        height: 100%;
-        svg {
-            font-size: 2.5rem;
+        label {
+            width: 7rem;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            cursor: pointer;
         }
     }
 }

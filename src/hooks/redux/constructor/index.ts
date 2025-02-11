@@ -6,17 +6,22 @@ export const useConstructorSelector = createSelector(
     (state) => state.construction,
 );
 
-// export const useConstructorInteractionsSelector = createSelector(
-//     (state: RootState) => state,
-//     (state) => state.constructor.interactions,
-// );
+export const useConstructorInteractionsSelector = createSelector(
+    (state: RootState) => state,
+    (state) => state.construction.interactions,
+);
 
-// export const useConstructorScenesSelector = createSelector(
-//     (state: RootState) => state,
-//     (state) => state.constructor.scenes,
-// );
+export const useConstructorSceneStateSelector = createSelector(
+    (state: RootState) => state,
+    (state) => state.construction.current.scene,
+)
 
-// export const useConstructorMetaSelector = createSelector(
-//     (state: RootState) => state,
-//     (state) => state.constructor.meta,
-// );
+export const useConstructorScenesSelector = createSelector(
+    (state: RootState) => state,
+    (state) => state.construction.scenes,
+);
+
+export const useConstructorMetaSelector = createSelector(
+    (state: RootState) => state,
+    (state) => state.construction.meta,
+);

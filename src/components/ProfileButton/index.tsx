@@ -8,36 +8,33 @@ import Link from "next/link";
 
 const ProfileButton = () => {
     const disaptch = useAppDispatch();
-    // const avatarUrl = '';
-    // const userName = '';
     const { avatarUrl, userName, accessToken, } = useAppSelector(useUserSelector);
     const logOut = async () => {
         const res = await fetch('/api/auth/logout');
         const data = await res.json();
-        if(data.state) {
-            disaptch(authLogOut());
-        };
+        if(data.state)
+            return disaptch(authLogOut());
     };
     const createNewQuest = async () => {
-        // if(!accessToken)
-        //     return;
-        // try {
-        //     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/quests`, {
-        //         method: 'POST',
-        //         headers: {
-        //             'authorization': `Bearer ${accessToken}`,
-        //             'Content-Type': 'application/json'
-        //         },
-        //         body: JSON.stringify({
-        //             "title": "2qwe",
-        //             "description": "string",
-        //             "difficulty": "MEDIUM"
-        //         })
-        //     })
-        //     const data = await res.json();
-        // } catch(e) {
-        //     console.log({e});
-        // }
+        if(!accessToken)
+            return;
+        try {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/quests`, {
+                method: 'POST',
+                headers: {
+                    'authorization': `Bearer ${accessToken}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "title": "2qwe",
+                    "description": "string",
+                    "difficulty": "MEDIUM"
+                }),
+            });
+            const data = await res.json();
+        } catch(e) {
+            console.log({e});
+        }
     };
     return (
         <DropdownMenu modal={false}>

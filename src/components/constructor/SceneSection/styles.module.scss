@@ -1,0 +1,86 @@
+$--bg-light-clr: #ffffff;
+$--bg-dark-clr: #3b3c3d;
+
+.scene-section {
+    flex-grow: 1;
+    max-width: 1600px;
+    width: 0;
+    height: 820px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    justify-content: space-between;
+    gap: 1.5rem;
+    @media (max-width: 1900px) {
+        height: 700px;
+    }
+    .container {
+        box-shadow: -1px 1px 4px 3px rgba(0, 0, 0, 0.384);
+        border: 1px solid #415bcf;
+        padding: 1rem;
+        color: #ffffff;
+        background-color: $--bg-dark-clr;
+    }
+    .scene {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 2rem;
+        position: relative;
+        width: 100%;
+        height: 620px;
+        @media (max-width: 1900px) {
+            height: 530px;
+        }
+        &__empty {
+            background:
+                linear-gradient(
+                    to left bottom,
+                    #2222249f,
+                    #1c1c248a
+                );
+            width: 1450px;
+            height: 600px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 5px;
+            gap: 1rem;
+            border: 1px solid rgba(148, 146, 146, 0.349);
+            position: relative;
+            input {
+                cursor: pointer;
+                position: absolute;
+                top: 0;
+                z-index: 2;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                opacity: 0;
+            }
+            &:hover {
+                background:
+                    linear-gradient(
+                        to left bottom,
+                        #2828299f,
+                        #1010149f
+                    );
+                .empty-scene-icon {
+                    transform: rotateZ(5deg) scale(1.1);
+                }
+            }
+            span {
+                user-select: none;
+                -webkit-user-select: none;
+                font-size: 1.5rem;
+            }
+            .empty-scene-icon {
+                font-size: 5rem;
+                transition: transform ease-in-out 0.3s;
+            }
+        }
+    }
+}

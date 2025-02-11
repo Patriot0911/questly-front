@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse, } from 'next/server';
-import AuthService from '@/lib/services/AuthService';
+import AuthService from '@/lib/services/server/AuthService';
 
 export async function GET(request: NextRequest) {
     const authRaw = request.cookies.get('authState');
@@ -12,7 +12,6 @@ export async function GET(request: NextRequest) {
     if(accessToken) {
         AuthService.authLogOut(accessToken);
     };
-    console.log({accessToken});
     const response = NextResponse.json({
         state: !!accessToken,
     });

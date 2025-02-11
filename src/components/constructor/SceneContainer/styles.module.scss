@@ -1,0 +1,25 @@
+.scene-wrapper {
+    background-color: #2828299f;
+    border: 1px solid rgba(148, 146, 146, 0.349);
+    border-radius: 5px;
+    width: 1450px;
+    height: 600px;
+    position: relative;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    align-items: center;
+    @media (max-width: 1900px) {
+        width: 925px;
+    }
+    .scene-state {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        height: 100%;
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+}

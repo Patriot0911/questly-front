@@ -6,6 +6,7 @@ class AuthService {
     static authLogIn(
         accessToken: string | null,
         refreshToken: string | null,
+        expires: Date,
         redirectUrl: string,
     ) {
         const response = NextResponse.redirect(redirectUrl);
@@ -13,7 +14,8 @@ class AuthService {
             AuthService.addTokenCookies(
                 response,
                 accessToken,
-                refreshToken
+                refreshToken,
+                expires
             );
         };
         return response;
@@ -36,10 +38,12 @@ class AuthService {
         response: NextResponse,
         accessToken: string,
         refreshToken: string,
+        expires: Date,
     ) {
         const auth = {
             accessToken,
             refreshToken,
+            expires,
         };
         response.cookies.set('authState', JSON.stringify(auth));
         return response;
@@ -61,6 +65,7 @@ class AuthService {
 
     static async refreshWare(refreshToken: string, fn: (accessToken: string, refreshToken: string) => Promise<NextResponse<any>>) {
         const refreshData = await AuthService.refreshTokens(refreshToken);
+        const expires = parseInt(process.env.ACCESS_EXPIRES);
         if(!refreshData || refreshData.statusCode == 401) {
             const response = NextResponse.json({
                 state: false,
@@ -69,13 +74,36 @@ class AuthService {
             return response;
         };
         const response: NextResponse<any> = await fn(refreshData.accessToken, refreshData.refreshToken);
-        return AuthService.addTokenCookies(response, refreshData.accessToken, refreshData.refreshToken);
+        return AuthService.addTokenCookies(
+            response,
+            refreshData.accessToken,
+            refreshData.refreshToken,
+            new Date(new Date().getTime()+expires),
+        );
     };
 
     static async getMe(
         accessToken: string,
         refreshToken: string,
-    ) {
+        expires: Date,
+    ): Promise<any> {
+        if(expires.getTime() <= new Date().getTime()) {
+            console.log('tested');
+            const refreshData = await AuthService.refreshTokens(refreshToken);
+            console.log({refreshData});
+            const newExpires = new Date(new Date().getTime()+parseInt(process.env.ACCESS_EXPIRES));
+            const response = await AuthService.getMe(
+                refreshData.accessToken,
+                refreshData.refreshToken,
+                newExpires
+            );
+            return AuthService.addTokenCookies(
+                response,
+                refreshData.accessToken,
+                refreshData.refreshToken,
+                newExpires
+            );
+        };
         const res = await fetch(
             `${process.env.NEXT_PUBLIC_API_URL}/auth/me`,
             {
@@ -84,15 +112,16 @@ class AuthService {
                 }
             }
         );
-        if(res.status == 401) {
-            return AuthService.refreshWare(refreshToken, AuthService.getMe);
-        };
         const data = await res.json();
+        console.log({data});
         return NextResponse.json({
             state: true,
             accessToken,
+            expires,
             refreshToken,
             name: data.fullName,
+            id: data.id,
+            avatarUrl: data.avatar?.id,
         });
     };
 };

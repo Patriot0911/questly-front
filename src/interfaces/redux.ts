@@ -1,16 +1,26 @@
 export interface IAuthState {
-    isAuthenticated: boolean;
+    id?: string;
     isLoading: boolean;
+    tokenExpires?: string;
     userName?: string;
     avatarUrl?: string;
     accessToken?: string;
     refreshToken?: string;
+    isAuthenticated: boolean;
 };
 
 export interface IAuthLoginPayload {
     userName: string;
+    id: string;
+    tokenExpires?: string;
+    avatarUrl?: string;
     accessToken?: string;
     refreshToken?: string;
+};
+export interface IAuthRefreshPayload {
+    tokenExpires: string;
+    accessToken: string;
+    refreshToken: string;
 };
 
 export interface IInteraction {
@@ -46,6 +56,15 @@ export interface IScene {
     height: number;
     updatedAt: Date;
     createdAt: Date;
+    background: {
+      id: string;
+      mimeType: string;
+      size: number;
+      filePath: string;
+      originalName: string;
+      ownerId: string;
+      createdAt: string;
+    };
 };
 
 export interface IQuestMeta {
@@ -68,10 +87,16 @@ export interface ILoadConstructorPayload {
     interactions: IInteraction[];
     meta: IQuestMeta;
 };
+export interface ISelectScenePayload extends IScene {};
 
 export interface IConstructorState {
     isLoading: boolean;
     meta: IQuestMeta;
     interactions: IInteraction[];
     scenes: IScene[];
+    current: {
+        createInteraction: boolean;
+        scene?: IScene;
+        interaction?: IInteraction;
+    };
 };

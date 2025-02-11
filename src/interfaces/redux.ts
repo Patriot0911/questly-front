@@ -56,14 +56,15 @@ export interface IScene {
     height: number;
     updatedAt: Date;
     createdAt: Date;
+    isMain?: boolean;
     background: {
-      id: string;
-      mimeType: string;
-      size: number;
-      filePath: string;
-      originalName: string;
-      ownerId: string;
-      createdAt: string;
+        id: string;
+        mimeType: string;
+        size: number;
+        filePath: string;
+        originalName: string;
+        ownerId: string;
+        createdAt: string;
     };
 };
 

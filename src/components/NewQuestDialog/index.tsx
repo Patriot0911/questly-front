@@ -1,32 +1,73 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Textarea } from "@/components/ui/textarea"
+import { Button } from "@/components/ui/button"
 import { Difficulty } from "@/interfaces/quest"
+import { useFetchWithAuth } from "@/lib/utils"
+import { Input } from "@/components/ui/input"
+import { useRouter } from "next/navigation"
 import { CirclePlus } from "lucide-react"
-import { useState } from "react"
 import { Label } from "../ui/label"
+import { useState } from "react"
 
 const NewQuestDialog = () => {
-    const [isOpen, setIsOpen] = useState(false);
+    const router = useRouter();
     const [title, setTitle] = useState("");
+    const fetchWithAuth = useFetchWithAuth();
+    const [isOpen, setIsOpen] = useState(false);
     const [description, setDescription] = useState("");
     const [difficulty, setDifficulty] = useState<Difficulty>(Difficulty.EASY);
     const [previewImage, setPreviewImage] = useState<File | null>(null);
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         console.log("Submitting quest:", { title, description, difficulty, previewImage });
+        const body = {
+            title,
+            description,
+            difficulty,
+        };
 
-        setTitle("");
-        setDescription("");
-        setDifficulty(Difficulty.EASY);
-        setPreviewImage(null);
-        setIsOpen(false);
+        if(previewImage) {
+            const formData = new FormData();
+            formData.append('file', previewImage);
+            const fileRes = await fetchWithAuth(`${process.env.NEXT_PUBLIC_API_URL}/files/upload`, {
+                method: 'POST',
+                body: formData,
+            });
+            if(fileRes) {
+                const fileData = await fileRes.json();
+                Object.assign(body, {
+                    thumbnail: fileData,
+                });
+            };
+        };
+        try {
+            const res = await fetchWithAuth(`${process.env.NEXT_PUBLIC_API_URL}/quests`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body),
+            });
+            if(!res)
+                return;
+            const data = await res.json();
+            if(!data.id)
+                return;
+            router.push(`constructor/${data.id}`);
+            setTitle("");
+            setDescription("");
+            setDifficulty(Difficulty.EASY);
+            setPreviewImage(null);
+            setIsOpen(false);
+            setIsOpen(false);
+        } catch(e) {
+            console.log({e});
+        }
     };
 
     return (

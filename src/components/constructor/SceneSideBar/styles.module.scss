@@ -11,13 +11,33 @@
         display: flex;
         flex-direction: column;
         gap: 0.2rem;
+        .file-input {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            &:hover {
+                label {
+                    color: #ffff;
+                }
+            }
+        }
+        input[type="file"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+        }
         label {
             font-size: 0.8rem;
             color: rgba(255, 255, 255, 0.514);
         }
-        input {
+        .file-input, input {
             padding: 5px;
             width: 100%;
+            height: 2rem;
             border: 1px solid rgb(161, 161, 161);
             background-color: rgb(26, 26, 26);
         }

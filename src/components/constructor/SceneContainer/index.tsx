@@ -72,13 +72,11 @@ const SceneContainer = ({ currentScene, }: { currentScene: IScene, }) => {
     );
     useEffect(
         () => {
-            console.log('test');
             if(interactions.length < 1)
                 return setSceneInetractions([]);
             const filteredInteractions = interactions.filter(
                 (item) => item.questSceneId === currentScene.id
             );
-            console.log('test2');
             setSceneInetractions(filteredInteractions);
         }, [currentScene]
     );
@@ -94,7 +92,7 @@ const SceneContainer = ({ currentScene, }: { currentScene: IScene, }) => {
             >
                 {
                     ref.current && sceneInteractions.map(
-                        (i, index) => (
+                        (i) => (
                             <div
                                 key={i.id}
                                 style={{
@@ -105,7 +103,6 @@ const SceneContainer = ({ currentScene, }: { currentScene: IScene, }) => {
                                     borderRadius: '50%',
                                     top: `${ref.current!.offsetHeight*i.dy}px`,
                                     left: `${ref.current!.offsetWidth*i.dx}px`,
-                                    zIndex: 15 + index,
                                 }}
                             />
                         )

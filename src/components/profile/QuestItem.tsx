@@ -7,7 +7,7 @@ interface QuestRatingProps {
     rating: number;
 };
 
-const QuestRating = ({ rating }: QuestRatingProps) => {
+export const QuestRating = ({ rating }: QuestRatingProps) => {
     return (
         <div className="absolute top-2 right-2 bg-yellow-400 text-gray-900 rounded-full px-2 py-1 flex items-center text-sm font-bold">
             <Star className="w-4 h-4 mr-1 fill-current" />

@@ -4,7 +4,7 @@ import { Pagination, PaginationContent, PaginationItem, PaginationNext, Paginati
 import { useAppSelector, } from "@/hooks/redux";
 import { useUserSelector } from "@/hooks/redux/auth";
 import { IQuestPreview, } from "@/interfaces/quest";
-import { ChevronDown, ChevronUp, Search } from "lucide-react";
+import { Search, SortAsc, SortDesc } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Button } from "../../ui/button";
@@ -29,7 +29,7 @@ const QuestGallery = ({ baseUrl, isAuth, }: { baseUrl: string; isAuth?: boolean;
             url.searchParams.append('page', `${page}`);
             url.searchParams.append('sortOrder', 'asc');
             url.searchParams.append('status', 'UNPUBLISHED');
-            if(isAuth && !isAuthenticated)
+            if (isAuth && !isAuthenticated)
                 return;
             const res = await fetch(url, {
                 headers: {
@@ -37,7 +37,8 @@ const QuestGallery = ({ baseUrl, isAuth, }: { baseUrl: string; isAuth?: boolean;
                 },
             });
             const data = await res.json();
-            if(!data || !data.data)
+            console.log({ data });
+            if (!data || !data.data)
                 return;
             setQuests(data.data);
             setTotalPages(data.total);
@@ -53,12 +54,12 @@ const QuestGallery = ({ baseUrl, isAuth, }: { baseUrl: string; isAuth?: boolean;
                     <Input
                         type="text"
                         placeholder="Search by quest name..."
-                        className="pl-10 pr-4 py-2 bg-white border border-black rounded-xl h-10 w-full focus:outline-none focus:ring-2 focus:ring-gray-400"
+                        className="pl-10 pr-4 py-2 bg-white border border-black rounded-none h-10 w-full focus:outline-none focus:ring-2 focus:ring-gray-400"
                     />
                 </div>
                 <div className="flex items-center space-x-2">
                     <Select>
-                        <SelectTrigger className="bg-white border text-gray-500 border-black rounded-xl h-10 w-full focus:outline-none focus:ring-2 focus:ring-gray-400">
+                        <SelectTrigger className="bg-white border text-gray-500 border-black rounded-none h-10 w-full focus:outline-none focus:ring-2 focus:ring-gray-400">
                             <SelectValue placeholder="Sort By" />
                         </SelectTrigger>
                         <SelectContent>
@@ -74,29 +75,32 @@ const QuestGallery = ({ baseUrl, isAuth, }: { baseUrl: string; isAuth?: boolean;
                     </Select>
                     <Button
                         onClick={toggleOrder}
-                        className="border border-black bg-white hover:bg-gray-200 rounded-xl h-10 px-3 flex items-center"
+                        className="border border-black bg-white hover:bg-gray-200 rounded-none h-10 px-3 flex items-center"
                     >
                         {order === "asc" ? (
-                            <ChevronUp className="text-black" size={16} />
+                            <SortAsc className="text-black" size={16} />
                         ) : (
-                            <ChevronDown className="text-black" size={16} />
+                            <SortDesc className="text-black" size={16} />
                         )}
                     </Button>
                 </div>
                 <div className="hidden xl:block"></div>
-                <div className="p-2 border border-black bg-white rounded-xl w-full ml-auto">
+                <div
+                    className="p-2 bg-white text-black border rounded-none w-full ml-auto"
+                    style={{ boxShadow: '-1px 1px 4px 3px rgba(0, 0, 0, 0.384)' }}
+                >
                     <Pagination>
                         <PaginationContent className="flex justify-between items-center flex-nowrap">
-                            <PaginationItem>
+                            <PaginationItem className="w-24">
                                 <PaginationPrevious
                                     onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
                                     className="w-full"
                                 />
                             </PaginationItem>
-                            <PaginationItem>
+                            <PaginationItem className="flex-1">
                                 <span className="px-4 text-nowrap">Page {page} of {totalPages ?? 1}</span>
                             </PaginationItem>
-                            <PaginationItem>
+                            <PaginationItem className="w-24">
                                 <PaginationNext
                                     onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
                                     className="w-full"

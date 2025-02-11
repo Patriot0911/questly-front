@@ -32,7 +32,7 @@ const NewQuestDialog = () => {
     return (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DialogTrigger>
-                <div className="flex items-center space-x-2 text-sm px-2 py-1.5 cursor-default w-[134px] rounded-sm hover:bg-gray-100">
+                <div className="flex items-center space-x-2 text-sm px-2 py-1.5 cursor-default w-[134px] rounded-sm hover:bg-gray-100 hover:text-black">
                     <CirclePlus size={16} />
                     <span>Create Quest</span>
                 </div>

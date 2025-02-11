@@ -3,7 +3,6 @@ import { Avatar, AvatarFallback, AvatarImage, } from "@/components/ui/avatar";
 import { useAppDispatch, useAppSelector, } from "@/hooks/redux";
 import { useUserSelector } from "@/hooks/redux/auth";
 import { authLogOut, } from '@/lib/redux/slices/auth';
-import NewQuestDialog from "../NewQuestDialog";
 import { LogOut, User } from "lucide-react";
 import Link from "next/link";
 
@@ -13,7 +12,7 @@ const ProfileButton = () => {
     const logOut = async () => {
         const res = await fetch('/api/auth/logout');
         const data = await res.json();
-        if(data.state) {
+        if (data.state) {
             disaptch(authLogOut());
         };
     };
@@ -24,9 +23,14 @@ const ProfileButton = () => {
                     <AvatarImage src={avatarUrl} alt={userName} />
                     <AvatarFallback>{userName?.charAt(0).toUpperCase()}</AvatarFallback>
                 </Avatar>
-                <span className="text-white">{userName}</span>
+                {userName && (
+                    <span className="text-white">
+                        {userName?.length > 24 ? `${userName?.slice(0, 21)}...` : userName}
+                    </span>
+                )}
+                <ChevronDown className="text-white" size={24} />
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-36">
+            <DropdownMenuContent align="end" className="w-36 bg-[#3b3c3d] border-none text-white rounded-none">
                 <DropdownMenuItem asChild>
                     <Link href={`/profile/${id}`}>
                         <User size={16} />

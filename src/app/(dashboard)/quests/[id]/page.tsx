@@ -1,17 +1,14 @@
+"use client";
 import QuestComments from "@/components/quest/QuestComments";
 import QuestDetails from "@/components/quest/QuestDetails";
 import QuestHeader from "@/components/quest/QuestHeader";
 import QuestStats from "@/components/quest/QuestStats";
 import { Difficulty, Status } from "@/interfaces/quest";
-
-interface Params {
-    id: string;
-}
+import { useParams } from "next/navigation";
 
 const mockedQuest = {
     id: "1",
     authorId: "123",
-    previewImageUrl: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1081590/header.jpg?t=1627988160",
     title: "The Lost Treasure",
     description: "Embark on an epic adventure to find the lost treasure hidden deep in the mountains.",
     status: Status.PUBLISHED,
@@ -31,14 +28,14 @@ const mockedQuest = {
     }
 };
 
-const QuestPage = ({ params }: { params: Params }) => {
-    const { id } = params;
+const QuestPage = () => {
+    const { id } = useParams();
 
     const getMockedQuest = (id: string) => {
         return mockedQuest;
     };
 
-    const quest = getMockedQuest(id);
+    const quest = getMockedQuest(id as string);
 
     return (
         <div className="container mx-auto px-4 py-8">

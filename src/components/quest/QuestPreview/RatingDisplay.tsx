@@ -18,7 +18,7 @@ const RatingDisplay = ({ value, Icon, color }: RatingDisplayProps) => (
                         className="absolute w-full h-full overflow-hidden"
                         style={{ clipPath: `polygon(0% 0%, ${Math.max(0, Math.min(1, value - i)) * 100}% 0%, ${Math.max(0, Math.min(1, value - i)) * 100}% 100%, 0% 100%)` }}
                     >
-                        <Icon className="w-full h-full" fill={color} />
+                        <Icon className="w-full h-full" fill={"yellow"} />
                     </div>
                 </div>
             ))}

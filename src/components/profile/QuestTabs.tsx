@@ -20,7 +20,7 @@ const QuestTabs = ({
         >
             <CardContent className="p-6">
                 <Tabs defaultValue="created" className="w-full">
-                    <TabsList className="bg-gray-800 text-white mb-4">
+                    <TabsList className="bg-gray-800 text-white mb-4 rounded-none">
                         <TabsTrigger value="created" className="flex-1 data-[state=active]:bg-[#415bcf] rounded-none">
                             Created Quests
                         </TabsTrigger>

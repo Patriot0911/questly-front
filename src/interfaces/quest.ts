@@ -14,7 +14,15 @@ export interface IQuestPreview {
     updatedAt: string;
     createdAt: string;
     author: IQuestAuthor;
-    previewImageUrl: string; // not yet done in backend
+    thumbnail?: {
+        id: string;
+        mimeType: string;
+        size: number;
+        filePath: string;
+        originalName: string;
+        ownerId: string;
+        createdAt: string;
+    };
 };
 
 export enum Difficulty {
@@ -31,8 +39,15 @@ export enum Status {
 export interface IQuestAuthor {
     id: string;
     fullName: string;
-    createdAt: string;
-}
+    avatar?: {
+        id: string;
+        mimeType: string;
+        size: number;
+        filePath: string;
+        originalName: string;
+        ownerId: string;
+    };
+};
 
 export interface IQuestComment {
     id: string
